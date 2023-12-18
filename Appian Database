@@ -1,0 +1,98 @@
+Create database company; -- database created
+use company;
+drop table employee;
+-- creating employee table to save the records the employee
+Create table employee (
+emp_id smallint unsigned not null auto_increment,
+ first_name varchar (45) not null,
+ last_name varchar (45),
+ email varchar(45) not null unique,
+ contact varchar(55) not null unique,
+ designation varchar (30),
+ salary int,
+ Bank_id int,
+ Adress varchar(100),
+ primary key (emp_id)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+
+-- creating table to save bank details of employees
+
+Create table bank_details (
+Bank_id smallint unsigned auto_increment not null,
+Bank_name varchar (45) not null,
+Bank_branch varchar (45) not null,
+primary key (bank_id)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+-- crating tables to store client and submission details
+create table POC (
+client_id smallint unsigned not null auto_increment unique,
+client_name varchar(45) not null unique,
+POC_name varchar (45) not null,
+primary key (client_id)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+-- creating table for requirements along with client
+create table requirement(
+Req_id int unsigned not null unique,
+client_id int not null,
+role varchar (45) not null,
+location varchar (45) not null,
+req_type varchar (20),
+rate int not null,
+primary key (Req_id)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+create table submission (
+s_id smallint unsigned not null unique,
+Req_id int not null,
+client_id int not null,
+emp_id int not null,
+first_name varchar(45) not null,
+last_name varchar(45),
+email_id varchar (45) not null unique,
+contact varchar(45) not null unique,
+submission_date datetime not null,
+primary key (s_id) 
+);
+
+
+
+
+
+set AUTOCOMMIT = 0;
+
+Insert into employee values (1,'Ankur', null, 'ank02@gmail.com', 7209700375, 'sr_recruiter', 35000, 2,'ranchi'),
+(2,'aradhana', 'kumari', 'aradhana01@gmail.com', 8596888193,'sr_recruiter', 25000,2,'jamshedpur'),
+(3, 'abhishek', 'Mukherjee', 'Abhishek01@gmail.com', 1234567890,'lead', 33000, 1,'bankura'),
+(4, 'abhishek', 'Kumar', 'abhishek02@gmail.com', 2134567890,'sr_recruiter',27000,3, 'hazaribagh'),
+(5,'nirbhay','singh','nirbhay01@gmail.com', 7788992233,  'sr_recruiter',21000,4,'ranchi'),
+(6,'pawan', 'yadav', 'pawan02@gmail.com', 2345665432,  'manager',60000,1,'asansol'),
+(7,'deepika', 'kumari', 'deepika@gmail.com', 7896543245, 'recruiter',20000,4, 'bokaro'),
+(8, 'Deepanjan','chakrobartee', 'deep05@yahoo.com', 90875476234, 'recruiter', 15000,3,'puruia'),
+(9, 'naveen', 'kumar', 'naveenk@outlook.com', 76548976,'manager', 55000,2,'jamshedpur'),
+(10, 'amresh', 'kumar', 'Akumar22@yahoo.com',6767677677,'lead', 45000,1,'jamshedpur'),
+(11, 'manvi' , 'singh', 'Manvis@rediff.com', 8976347890,'recruiter', null,2,'ranchi'),
+(12, 'olive', 'tirkey', 'olive1234@yahoo.com', 9087534989,'recruiter',17000,1,'ranchi'),
+(13,'priyanka', 'singh', 'psingh99@rediff.com', 8976343222,'recruiter', 22000,3,'piska'),
+(14,'gaurav', 'kumar', 'gkumar@gmail.com', 9875544678,'trainee',null,3, 'gaya');
+
+
+insert into bank_details values(1, 'HDFC','ranchi'),
+(2, 'SBI', 'jamshedpur'),
+(3,'ICICI', 'ranchi'),
+(4, 'Yes bank', 'ranchi');
+
+insert into poc values (1, 'wipro', 'rajesh'),
+(2, 'synechron','manish'),
+(3,'wallmart', 'khushboo'),
+(4, 'PSI', 'Neeraj'),
+(5, 'hexaware','pawan'),
+(6, 'scout','naveen'),
+(7, 'birlasoft','abhishek'),
+(8, 'sid_tech', 'shailendra');
+
+insert into requirement values(1, 4, 'java developer', 'Texas', 'contract', 60),
+(2,2, '.net developer', 'new york', 'contract', 65),
+();
