@@ -1,6 +1,15 @@
 create database company; -- database created
 use company;
 
+-- creating table to save bank details of employees
+
+Create table bank_details (
+Bank_id smallint unsigned auto_increment not null,
+Bank_name varchar (45) not null,
+Bank_branch varchar (45) not null,
+primary key (bank_id)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
 -- creating employee table to save the records the employee
 Create table employee (
 emp_id smallint unsigned not null auto_increment,
@@ -10,20 +19,12 @@ emp_id smallint unsigned not null auto_increment,
  contact varchar(55) not null unique,
  designation varchar (30),
  salary int,
- Bank_id int,
+ Bank_id smallint unsigned,
  Adress varchar(100),
- primary key (emp_id)
+ primary key (emp_id),
+ foreign key (Bank_id) references bank_details(Bank_id)
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
-
--- creating table to save bank details of employees
-
-Create table bank_details (
-Bank_id smallint unsigned auto_increment not null,
-Bank_name varchar (45) not null,
-Bank_branch varchar (45) not null,
-primary key (bank_id)
-)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 -- crating tables to store client and submission details
 create table POC (
@@ -36,25 +37,29 @@ primary key (client_id)
 -- creating table for requirements along with client
 create table requirement(
 Req_id int unsigned not null unique auto_increment,
-client_id int not null,
+client_id smallint unsigned not null,
 role varchar (45) not null,
 location varchar (45) not null,
 req_type varchar (20),
 rate int not null,
-primary key (Req_id)
+primary key (Req_id),
+foreign key (client_id) references POC (client_id)
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 create table submission (
-s_id smallint unsigned not null unique auto_increment,
-Req_id int not null,
-client_id int not null,
-emp_id int not null,
+s_id int unsigned not null unique auto_increment,
+Req_id int unsigned not null ,
+client_id smallint unsigned not null,
+emp_id smallint unsigned not null,
 first_name varchar(45) not null,
 last_name varchar(45),
 email_id varchar (45) not null unique,
 contact varchar(45) not null unique,
 submission_date datetime not null,
-primary key (s_id) 
+primary key (s_id),
+foreign key (Req_id) references requirement (Req_id),
+foreign key (client_id) references POC (client_id),
+foreign key (emp_id) references employee(emp_id)
 );
 
 
@@ -62,6 +67,12 @@ primary key (s_id)
 
 
 set AUTOCOMMIT = 0;
+
+insert into bank_details (Bank_name, Bank_branch) 
+values('HDFC','ranchi'),
+('SBI', 'jamshedpur'),
+('ICICI', 'ranchi'),
+('Yes bank', 'ranchi');
 
 Insert into employee (first_name, last_name, email, contact,designation, salary, Bank_id,Adress) values 
 ('Ankur', null, 'ank02@gmail.com', 7209700375, 'sr_recruiter', 35000, 2,'ranchi'),
@@ -80,11 +91,6 @@ Insert into employee (first_name, last_name, email, contact,designation, salary,
 ('gaurav', 'kumar', 'gkumar@gmail.com', 9875544678,'trainee',null,3, 'gaya');
 
 
-insert into bank_details (Bank_name, Bank_branch) 
-values('HDFC','ranchi'),
-('SBI', 'jamshedpur'),
-('ICICI', 'ranchi'),
-('Yes bank', 'ranchi');
 
 insert into poc (client_name,POC_name) values 
 ('wipro', 'rajesh'),
@@ -95,7 +101,4 @@ insert into poc (client_name,POC_name) values
 ('scout','naveen'),
 ('birlasoft','abhishek'),
 ('sid_tech', 'shailendra');
-
-
-
 
